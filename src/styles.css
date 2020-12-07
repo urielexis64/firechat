@@ -1,29 +1,27 @@
-.main-container{
+.main-container {
   margin-top: 40px;
   margin-bottom: 150px;
 }
 
-.puntero{
+.pointer {
   cursor: pointer;
 }
 
-
-.chat-window{
+.chat-window {
   padding: 10px;
   width: 300px;
   height: 400px;
   overflow: hidden;
-  border: 1px solid #4080FF;
+  border: 1px solid #4080ff;
   border-radius: 20px;
 }
 
-.app-mensajes{
-  overflow-y:scroll;
-  height:270px;
+.app-messages {
+  overflow-y: scroll;
+  height: 260px;
   /*background:gray;*/
   padding: 5px;
 }
-
 
 /* Animaciones */
 .animated {
