@@ -9,9 +9,10 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, ChatComponent],
+  declarations: [AppComponent, ChatComponent, LoginComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
