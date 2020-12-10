@@ -23,16 +23,11 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     const newMessage = this.message.trim();
+    this.message = '';
     if (newMessage.length !== 0) {
-      this._cs
-        .addMessage(newMessage)
-        .then(() => {
-          this.message = '';
-          console.log('Message sent!');
-        })
-        .catch((err) => {
-          console.log('Error: ', err);
-        });
+      this._cs.addMessage(newMessage).catch((err) => {
+        console.error('Error: ', err);
+      });
     }
   }
 }
