@@ -1,25 +1,41 @@
-<h1>Chat</h1>
+<div style="display: flex; justify-content: space-between; align-items: center">
+  <h1 class="d-inline-block">Chat</h1>
+  <img [src]="_cs.user.img" class="img-fluid img-bubble" alt="profile-img" />
+</div>
 <hr />
-<div class="app-messages" id="app-messages">
-  <div class="text-right mb-3" *ngFor="let chat of _cs.chats">
-    <span class="badge badge-primary mb-2">{{ chat.name || "Uriel" }}</span>
-    <div class="content-message">
-      <p>
+<div class="app-messages fadeIn" id="app-messages">
+  <div
+    class="mb-3"
+    [class.text-right]="_cs.user.uid === chat.uid"
+    *ngFor="let chat of _cs.chats"
+  >
+    <div [class.chat-info]="_cs.user.uid !== chat.uid">
+      <span
+        class="badge user-name"
+        [ngClass]="{
+          'badge-primary': _cs.user.uid === chat.uid,
+          'badge-success': _cs.user.uid !== chat.uid
+        }"
+        >{{ chat.name }}</span
+      >
+      <img
+        *ngIf="_cs.user.uid !== chat.uid"
+        [src]="chat.img"
+        style="height: 1.2em !important"
+        class="img-bubble"
+        alt="profile-img"
+      />
+    </div>
+
+    <div>
+      <p class="bubble-message mb-0">
         {{ chat.message }}
       </p>
-      <small style="font-size: 11px" class="text-muted d-block mt-2">{{
-        chat.date | date
+      <small style="font-size: 10px" class="text-muted d-block">{{
+        chat.date | date: "short"
       }}</small>
     </div>
   </div>
-  <!--  <div class="text-right">
-    <span class="badge badge-primary">Uriel</span>
-    <p>Que pedo</p>
-  </div>
-  <div>
-    <span class="badge badge-danger">Cacas</span>
-    <p>Que rollo</p>
-  </div> -->
 </div>
 
 <input
