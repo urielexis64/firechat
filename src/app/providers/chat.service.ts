@@ -18,33 +18,32 @@ export class ChatService {
 
   constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) {
     this.afAuth.authState.subscribe((user) => {
-      console.log(user);
-
       if (user) {
         this.user.name = user.displayName;
         this.user.uid = user.uid;
+        this.user.img = user.photoURL;
       }
     });
   }
 
   login(provider: string) {
-    this.afAuth.auth
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(() => {
-        console.log('Logged successfully');
-      });
+    if (provider === 'google') {
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    } else {
+      this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+    }
   }
   logout() {
     this.afAuth.auth.signOut();
+    this.user = {};
   }
 
   loadMessages() {
     this.itemsCollection = this.afs.collection<Message>('chats', (ref) =>
-      ref.orderBy('date', 'desc').limit(5)
+      ref.orderBy('date', 'desc').limit(10)
     );
     return this.itemsCollection.valueChanges().pipe(
       map((messages: Message[]) => {
-        console.log(messages);
         this.chats = [];
         for (let message of messages) {
           this.chats.unshift(message);
@@ -56,9 +55,11 @@ export class ChatService {
 
   addMessage(text: string) {
     let message: Message = {
-      name: 'El Pepe',
+      name: this.user.name,
       message: text,
+      img: this.user.img,
       date: new Date().getTime(),
+      uid: this.user.uid,
     };
 
     return this.itemsCollection.add(message);
